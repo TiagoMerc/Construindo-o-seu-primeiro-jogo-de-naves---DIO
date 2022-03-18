@@ -15,13 +15,16 @@ function start() {
   //Principais variáveis do jogo
 
   var jogo = {}
-
+  var velocidade=5;
+  var posicaoY = parseInt(Math.random() * 334); //O inimigo pode estar posicionado tanto no 0 quanto 334. Função Math.random
+ 
   var TECLA = {
     /*Valor decimal de cada tecla */
     W: 87, //Movimentar o helicopteto para baixo
     S: 83, //Realizar os disparos
     D: 68 //
   }
+
 
   //Usar outras teclas, usar keycode
   jogo.pressionou = []
@@ -48,6 +51,8 @@ function start() {
   function loop() {
     movefundo()
     movejogador() //Função move jogador
+    moveinimigo1();
+
   } // Fim da função loop()
 
   //Função que movimenta o fundo do jogo
@@ -94,4 +99,20 @@ function start() {
       //Chama função Disparo
     }
   } // fim da função movejogador()
+
+  //Função move inimigo
+  function moveinimigo1() {
+
+    posicaoX = parseInt($("#inimigo1").css("left"));
+    $("#inimigo1").css("left",posicaoX-velocidade); 
+    $("#inimigo1").css("top",posicaoY);
+      
+      if (posicaoX<=0) {
+      posicaoY = parseInt(Math.random() * 334);
+      $("#inimigo1").css("left",694);
+      $("#inimigo1").css("top",posicaoY); //reposicionando 
+        
+      }
+  } //Fim da função moveinimigo1()
+
 } // Fim da função start
