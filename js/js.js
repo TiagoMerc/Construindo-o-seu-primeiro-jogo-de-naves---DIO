@@ -14,7 +14,29 @@ function start() { // Inicio da função start()
 //Principais variáveis do jogo
 	
 var jogo = {};
+
+var TECLA = {
+  /*Valor decimal de cada tecla */
+	W: 87, //Movimentar o helicopteto para baixo
+	S: 83, //Realizar os disparos 
+	D: 68 //
+	}
+
+  //Usar outras teclas, usar keycode
+	jogo.pressionou = [];
+
+  //Verifica se o usuário pressionou alguma tecla	
 	
+	$(document).keydown(function(e){ //Identifica se o usuário pressionou uma tecla
+    jogo.pressionou[e.which] = true; //Usuário pressionou uma tecla, o valor é true
+    });
+  
+  
+    $(document).keyup(function(e){ //Identifica que nelhuma tecla foi pressionada pelo usuário
+         jogo.pressionou[e.which] = false; //Se o usuário não pressionou uma tecla, o valor é false
+    });
+
+
 //Game Loop
 
 jogo.timer = setInterval(loop,30); /*temporizador, onde indica a função loop e o tempo de 30 milissegundos */
@@ -22,6 +44,7 @@ jogo.timer = setInterval(loop,30); /*temporizador, onde indica a função loop e
 function loop() {
 
 movefundo();
+movejogador(); //Função move jogador
 
 } // Fim da função loop()
 
@@ -34,6 +57,28 @@ function movefundo() {
 	
   /* Para o fundo passar mais rápido, mudar o valor acima "esquerda-1"*/
 	} // fim da função movefundo()
+
+
+  function movejogador() {
+	
+    if (jogo.pressionou[TECLA.W]) {  //Para a helicoptero ir para cima 
+      var topo = parseInt($("#jogador").css("top"));
+      $("#jogador").css("top",topo-10);
+    
+    }
+    
+    if (jogo.pressionou[TECLA.S]) {  //Para a helicoptero ir para baixo
+      
+      var topo = parseInt($("#jogador").css("top"));
+      $("#jogador").css("top",topo+10);	
+    }
+    
+    if (jogo.pressionou[TECLA.D]) { //Atirar 
+      
+      //Chama função Disparo	
+    }
+  
+    } // fim da função movejogador()
 
 
 } // Fim da função start
