@@ -54,6 +54,7 @@ function start() {
     moveinimigo1()
     moveinimigo2()
     moveamigo()
+    colisao();
   } // Fim da função loop()
 
   //Função que movimenta o fundo do jogo
@@ -172,4 +173,13 @@ function start() {
       }
     } // Fecha executaDisparo()
   } // Fecha disparo()
+
+  //Função Colisão
+  function colisao() {
+    var colisao1 = ($("#jogador").collision($("#inimigo1"))); //VAr com div jogador que colidi com a div inimigo1
+    // jogador com o inimigo1
+  //IMPORTANTE: Se a variável for preenchida, é porque houver colisão
+    console.log(colisao1); //Teste 
+  
+  } //Fim da função colisao()
 } // Fim da função start
