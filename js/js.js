@@ -14,6 +14,7 @@ function start() {
 
   //Principais variáveis do jogo
 
+  var podeAtirar = true
   var jogo = {}
   var velocidade = 5
   var posicaoY = parseInt(Math.random() * 334) //O inimigo pode estar posicionado tanto no 0 quanto 334. Função Math.random
@@ -52,7 +53,7 @@ function start() {
     movejogador() //Função move jogador
     moveinimigo1()
     moveinimigo2()
-    moveamigo();
+    moveamigo()
   } // Fim da função loop()
 
   //Função que movimenta o fundo do jogo
@@ -97,6 +98,7 @@ function start() {
     if (jogo.pressionou[TECLA.D]) {
       //Atirar
       //Chama função Disparo
+      disparo()
     }
   } // fim da função movejogador()
 
@@ -115,25 +117,59 @@ function start() {
 
   //Move inimigo 2
   function moveinimigo2() {
-    posicaoX = parseInt($('#inimigo2').css('left')) //div inimigo 2, pega a div e subtrai, caminha 3 unidas para esquerda 
+    posicaoX = parseInt($('#inimigo2').css('left')) //div inimigo 2, pega a div e subtrai, caminha 3 unidas para esquerda
     $('#inimigo2').css('left', posicaoX - 3)
 
-    if (posicaoX <= 0) { //Tiver variável menor e igual a 0, reposiciona o inimigo 2 no lado direito da "div"   
+    if (posicaoX <= 0) {
+      //Tiver variável menor e igual a 0, reposiciona o inimigo 2 no lado direito da "div"
       $('#inimigo2').css('left', 775)
     }
   } // Fim da função moveinimigo2()
 
-  //Função move amigo 
+  //Função move amigo
   function moveamigo() {
-	
-  posicaoX = parseInt($("#amigo").css("left")); //var numa posição que é a left, que atualiza com a  posiçãoX"
-    $("#amigo").css("left",posicaoX+1);
-          
-      if (posicaoX>906) { //volta pro 0
-        
-      $("#amigo").css("left",0); 
-            
-      }
-  
+    posicaoX = parseInt($('#amigo').css('left')) //var numa posição que é a left, que atualiza com a  posiçãoX"
+    $('#amigo').css('left', posicaoX + 1)
+
+    if (posicaoX > 906) {
+      //volta pro 0
+
+      $('#amigo').css('left', 0)
+    }
   } // fim da função moveamigo()
+
+  function disparo() {
+    if (podeAtirar == true) {
+      //idica que o usuario pode realizar o tiro
+
+      podeAtirar = false //O usuário não pode realizar o tiro se essa função estiver em execução
+
+      topo = parseInt($('#jogador').css('top')) //Saber a posição do helicoptero para o tiro sair dele
+      posicaoX = parseInt($('#jogador').css('left')) //Saber a posição do helicoptero para o tiro sair dele
+
+      //Onde vai ser o local inicial do tiro
+      tiroX = posicaoX + 190
+      topoTiro = topo + 37
+      $('#fundoGame').append("<div id='disparo'></div") //div disparo
+
+      //posicionar a div
+      $('#disparo').css('top', topoTiro)
+      $('#disparo').css('left', tiroX)
+
+      var tempoDisparo = window.setInterval(executaDisparo, 30) // fazer a div caminhar
+    } //Fecha podeAtirar
+
+    function executaDisparo() {
+      posicaoX = parseInt($('#disparo').css('left'))
+      $('#disparo').css('left', posicaoX + 15) //tiro mais rápido ou lenta
+
+      if (posicaoX > 900) {
+        //Depois de caminhar pela tella, a div é cancelada
+        window.clearInterval(tempoDisparo)
+        tempoDisparo = null
+        $('#disparo').remove() //Depois que o disparo foi removido da tela, o usuário vai poder atirar novamente
+        podeAtirar = true //Atirar novamente
+      }
+    } // Fecha executaDisparo()
+  } // Fecha disparo()
 } // Fim da função start
