@@ -447,3 +447,13 @@ function start() {
   } // Fim da função gameOver();
 
 } // Fim da função start
+
+
+//Reinicia o Jogo
+// É chamda quanto clica na div reinicia jogo 		
+function reiniciaJogo() {
+	somGameover.pause(); //Pausa jogo
+	$("#fim").remove(); //para
+	start();
+	
+} //Fim da função reiniciaJogo
