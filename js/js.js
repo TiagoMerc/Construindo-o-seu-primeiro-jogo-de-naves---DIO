@@ -11,17 +11,17 @@ function start() {
   $('#fundoGame').append("<div id='inimigo1' class='anima2'></div>")
   $('#fundoGame').append("<div id='inimigo2'></div>")
   $('#fundoGame').append("<div id='amigo' class='anima3'></div>")
-  $("#fundoGame").append("<div id='placar'></div>");
-  $("#fundoGame").append("<div id='energia'></div>");
+  $('#fundoGame').append("<div id='placar'></div>")
+  $('#fundoGame').append("<div id='energia'></div>")
 
   //Principais variáveis do jogo
 
   var podeAtirar = true
   var fimdejogo = false
-  var pontos=0;
-  var salvos=0;
-  var perdidos=0;
-  var energiaAtual=3;
+  var pontos = 0
+  var salvos = 0
+  var perdidos = 0
+  var energiaAtual = 3
   var jogo = {}
   var velocidade = 5
   var posicaoY = parseInt(Math.random() * 334) //O inimigo pode estar posicionado tanto no 0 quanto 334. Função Math.random
@@ -36,18 +36,24 @@ function start() {
   //Usar outras teclas, usar keycode
   jogo.pressionou = []
 
- //Sons 
-  var somDisparo=document.getElementById("somDisparo");
-var somExplosao=document.getElementById("somExplosao");
-var musica=document.getElementById("musica");
-var somGameover=document.getElementById("somGameover");
-var somPerdido=document.getElementById("somPerdido");
-var somResgate=document.getElementById("somResgate");
+  //Sons
+  var somDisparo = document.getElementById('somDisparo')
+  var somExplosao = document.getElementById('somExplosao')
+  var musica = document.getElementById('musica')
+  var somGameover = document.getElementById('somGameover')
+  var somPerdido = document.getElementById('somPerdido')
+  var somResgate = document.getElementById('somResgate')
 
-//Música em loop
-musica.addEventListener("ended", function(){ musica.currentTime = 0; musica.play(); }, false);
-musica.play();
-
+  //Música em loop
+  musica.addEventListener(
+    'ended',
+    function () {
+      musica.currentTime = 0
+      musica.play()
+    },
+    false
+  )
+  musica.play()
 
   //Verifica se o usuário pressionou alguma tecla
 
@@ -75,9 +81,8 @@ musica.play();
     moveinimigo2()
     moveamigo()
     colisao()
-    placar();
-    energia();
-
+    placar()
+    energia()
   } // Fim da função loop()
 
   //Função que movimenta o fundo do jogo
@@ -166,7 +171,7 @@ musica.play();
   function disparo() {
     if (podeAtirar == true) {
       //idica que o usuario pode realizar o tiro
-      somDisparo.play(); //Som de tiro
+      somDisparo.play() //Som de tiro
       podeAtirar = false //O usuário não pode realizar o tiro se essa função estiver em execução
 
       topo = parseInt($('#jogador').css('top')) //Saber a posição do helicoptero para o tiro sair dele
@@ -181,7 +186,7 @@ musica.play();
       $('#disparo').css('top', topoTiro)
       $('#disparo').css('left', tiroX)
 
-    var tempoDisparo = window.setInterval(executaDisparo, 30) // fazer a div caminhar
+      var tempoDisparo = window.setInterval(executaDisparo, 30) // fazer a div caminhar
     } //Fecha podeAtirar
 
     function executaDisparo() {
@@ -218,8 +223,7 @@ musica.play();
     var colisao6 = $('#inimigo2').collision($('#amigo'))
 
     if (colisao1.length > 0) {
-
-      energiaAtual--;
+      energiaAtual--
       inimigo1X = parseInt($('#inimigo1').css('left'))
       inimigo1Y = parseInt($('#inimigo1').css('top'))
       explosao1(inimigo1X, inimigo1Y) //Chamar a função
@@ -232,7 +236,7 @@ musica.play();
     // jogador com o inimigo2
     if (colisao2.length > 0) {
       //Pega a posição do inimigo 2 e armazena nas duas variaveis e executa uma função com nome explosão 2
-      energiaAtual--;
+      energiaAtual--
       inimigo2X = parseInt($('#inimigo2').css('left'))
       inimigo2Y = parseInt($('#inimigo2').css('top'))
       explosao2(inimigo2X, inimigo2Y)
@@ -245,9 +249,8 @@ musica.play();
     // Disparo com o inimigo1
 
     if (colisao3.length > 0) {
-
-      velocidade=velocidade+0.3; //Aumenta a dificuldade
-      pontos=pontos+100;//placar 
+      velocidade = velocidade + 0.3 //Aumenta a dificuldade
+      pontos = pontos + 100 //placar
       inimigo1X = parseInt($('#inimigo1').css('left')) //pega as posicções do inimigo
       inimigo1Y = parseInt($('#inimigo1').css('top'))
 
@@ -262,8 +265,7 @@ musica.play();
     // Disparo com o inimigo2
 
     if (colisao4.length > 0) {
-
-      pontos=pontos+50; //Placar
+      pontos = pontos + 50 //Placar
       inimigo2X = parseInt($('#inimigo2').css('left'))
       inimigo2Y = parseInt($('#inimigo2').css('top'))
       $('#inimigo2').remove()
@@ -277,9 +279,8 @@ musica.play();
     // jogador com o amigo
 
     if (colisao5.length > 0) {
-
-      salvos++; //Placar
-      somResgate.play(); //Som
+      salvos++ //Placar
+      somResgate.play() //Som
       reposicionaAmigo()
       $('#amigo').remove()
     }
@@ -287,9 +288,7 @@ musica.play();
     //Inimigo2 com o amigo
 
     if (colisao6.length > 0) {
-
-      
-      perdidos++; //placar
+      perdidos++ //placar
       amigoX = parseInt($('#amigo').css('left')) //posição atual da div amigo
       amigoY = parseInt($('#amigo').css('top'))
       explosao3(amigoX, amigoY)
@@ -302,8 +301,7 @@ musica.play();
   //Função explosão
   //Explosão 1
   function explosao1(inimigo1X, inimigo1Y) {
-
-    somExplosao.play();
+    somExplosao.play()
     $('#fundoGame').append("<div id='explosao1'></div") //div indicando a explosão
     $('#explosao1').css('background-image', 'url(/imgs/explosao.png)')
     var div = $('#explosao1')
@@ -341,8 +339,7 @@ musica.play();
   //Explosão 2, posição do inimigo 2
   //Explosão2
   function explosao2(inimigo2X, inimigo2Y) {
-
-    somExplosao.play();
+    somExplosao.play()
     $('#fundoGame').append("<div id='explosao2'></div")
     $('#explosao2').css('background-image', 'url(/imgs/explosao.png)')
     var div2 = $('#explosao2')
@@ -377,8 +374,7 @@ musica.play();
   //Explosão3
 
   function explosao3(amigoX, amigoY) {
-
-    somPerdido.play(); //Som
+    somPerdido.play() //Som
     $('#fundoGame').append("<div id='explosao3' class='anima4'></div")
     $('#explosao3').css('top', amigoY)
     $('#explosao3').css('left', amigoX)
@@ -392,38 +388,62 @@ musica.play();
 
   //Placar do jogo
   function placar() {
-	
-    $("#placar").html("<h2> Pontos: " + pontos + " Salvos: " + salvos + " Perdidos: " + perdidos + "</h2>");
-    
+    $('#placar').html(
+      '<h2> Pontos: ' +
+        pontos +
+        ' Salvos: ' +
+        salvos +
+        ' Perdidos: ' +
+        perdidos +
+        '</h2>'
+    )
   } //fim da função placar()
-
 
   //Barra de energia
 
-function energia() {
-	
-  if (energiaAtual==3) {
-    
-    $("#energia").css("background-image", "url(/imgs/energia3.png)");
-  }
+  function energia() {
+    if (energiaAtual == 3) {
+      $('#energia').css('background-image', 'url(/imgs/energia3.png)')
+    }
 
-  if (energiaAtual==2) {
-    
-    $("#energia").css("background-image", "url(/imgs/energia2.png)");
-  }
+    if (energiaAtual == 2) {
+      $('#energia').css('background-image', 'url(/imgs/energia2.png)')
+    }
 
-  if (energiaAtual==1) {
-    
-    $("#energia").css("background-image", "url(/imgs/energia1.png)");
-  }
+    if (energiaAtual == 1) {
+      $('#energia').css('background-image', 'url(/imgs/energia1.png)')
+    }
 
-  if (energiaAtual==0) {
-    
-    $("#energia").css("background-image", "url(/imgs/energia0.png)");
-    
-    //Game Over
-  }
+    if (energiaAtual == 0) {
+      $('#energia').css('background-image', 'url(/imgs/energia0.png)')
 
-} // Fim da função energia()
+      //Game Over
+      gameOver(); //chama a função
+    }
+  } // Fim da função energia()
+
+  //Função GAME OVER
+  function gameOver() {
+    fimdejogo = true
+    musica.pause()  //pausa a música
+    somGameover.play()  //Música game over
+
+    window.clearInterval(jogo.timer)
+    jogo.timer = null
+//Removendo da tela
+    $('#jogador').remove() 
+    $('#inimigo1').remove()
+    $('#inimigo2').remove()
+    $('#amigo').remove()
+//Nova div
+    $('#fundoGame').append("<div id='fim'></div>")
+
+    $('#fim').html(
+      '<h1> Game Over </h1><p>Sua pontuação foi: ' +
+        pontos +
+        '</p>' +
+        "<div id='reinicia' onClick=reiniciaJogo()><h3>Jogar Novamente</h3></div>"
+    )
+  } // Fim da função gameOver();
 
 } // Fim da função start
