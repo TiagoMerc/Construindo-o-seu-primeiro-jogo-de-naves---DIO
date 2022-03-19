@@ -232,7 +232,7 @@ function start() {
 
     if (colisao3.length > 0) {
 
-      
+      velocidade=velocidade+0.3; //Aumenta a dificuldade
       pontos=pontos+100;//placar 
       inimigo1X = parseInt($('#inimigo1').css('left')) //pega as posicções do inimigo
       inimigo1Y = parseInt($('#inimigo1').css('top'))
